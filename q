@@ -2,7 +2,7 @@
 set -e
 
 if [ $# -eq 0 ] ; then
-   echo "Ussage a (file_pattern) grep_pattern" >&2
+   echo "Ussage: q (file_pattern) grep_pattern" >&2
    exit 1
 fi
 if [ $# -eq 1 ] ; then
