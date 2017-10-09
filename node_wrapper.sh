@@ -22,8 +22,8 @@ cat <<EOF
 |   DOCKER_OPT="${DOCKER_OPT} -v /tmp:/tmp" 
 |   ------------------------------------------
 |
-| WARN!!:global installs to default directory (/usr/local/lib/node/)
-|  will be lost after each run. You can use '--prefix=/root/node_lib' like:
+| WARN!!:npm -g install (npm global installs) to default directory (/usr/local/lib/node/)
+|  will be lost after each run. To fix the issue you can use '--prefix=/root/node_lib' like:
 |    myHost@myWorkingDir $ ./node_wrapper.sh  npm install -g --prefix=/root/bower_install bower 
 |
 |  and later use the installed package like:
