@@ -1,10 +1,10 @@
 #!/bin/bash
 
-function ussage(){
+function usage(){
 cat <<EOF
 +-------------------------------------------------------------
 | Utility script to launch dockerized node instances:
-| Ussage:
+| Usage:
 | * Replace commands like:
 |     myHost@myWorkingDir $ npm install
 |   by:
@@ -34,7 +34,7 @@ cat <<EOF
 EOF
 }
 
-if [ $# == 0 ]; then ussage ; exit 1 ; fi
+if [ $# == 0 ]; then usage ; exit 1 ; fi
 
 NODE_VERSION=7.9
 
