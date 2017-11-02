@@ -36,7 +36,7 @@ EOF
 
 if [ $# == 0 ]; then usage ; exit 1 ; fi
 
-NODE_VERSION=7.9
+NODE_VERSION=latest
 
 if [ -f EXTRA_DOCKER_OPTS ]; then . EXTRA_DOCKER_OPTS ; fi
 
