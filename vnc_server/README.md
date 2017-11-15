@@ -1,3 +1,5 @@
+Helpers scripts to launch a remote VNC server running a Linux desktop (gnome / i3).
+
 - 'assigned_vncserver_ports.conf' is an example config file indicating how to map users to VNC-Server listening ports.
   It must be placed in /etc
 
