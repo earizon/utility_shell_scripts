@@ -1,5 +1,5 @@
 # Utility scripts
-Keep it simple and stupid utility scripts for daily development task
+Keep it simple and stupid utility scripts for useful task
 
 Please, if this project was useful to you, consider making a donation to my Bitcoin address (1JXPKbYJwfbMfFCWbRdiKRgw8H2JaPboUK):
 
