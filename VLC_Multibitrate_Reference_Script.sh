@@ -8,7 +8,8 @@
 # -  No GUI needed ("-I dummy"). Can be installed as a daemon 
 # -  CPU comsumption varies depending on the 
 #    number of parallel output streams: 
-#       The bigger the internal CPU L1-cache the best.
+#       The bigger the internal CPU L2-cache the best.
+#       (cat /proc/cpuinfo will show your CPU L2-cache)
 #    A modern Intel Xeon will probably keep up
 #    with 10 or more parallel channels with no major problems.
 # 
