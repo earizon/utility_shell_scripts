@@ -26,8 +26,4 @@ Keep it simple and stupid utility scripts for different/useful/random tasks
  * VLC_Multibitrate_Reference_Script.sh: KISS reference script that takes any input video and streams in parallel
    to different screens and bitrate resolutions using the world famous VLC. 
    It can be used to stream video through low-bandth-width or saturated networks.
-       
 
-Please, if this project was useful to you, consider making a donation to my Bitcoin address (1JXPKbYJwfbMfFCWbRdiKRgw8H2JaPboUK):
-
-![QR Code](./btc_address_1JXPKbYJwfbMfFCWbRdiKRgw8H2JaPboUK.png)
