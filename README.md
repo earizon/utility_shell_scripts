@@ -1,11 +1,5 @@
 # Utility scripts
 Keep it simple and stupid utility scripts for different/useful/random tasks
-
- * `vnc_server` directory contains KISS scripts to launch a linux remote desktop (i3 and Gnome) that can be
-   controlled    remotely through (Tiger)VNC. A simple mapping between system users and assigned network 
-   ports is used to allow independent remote desktops for different users. It has been succesfully tested in
-   CentOS/Fedora/Debian/Ubuntu systems running in Linode, OVH, Amazon and Microsofot Azure servers.
-   Scripts can easily be adapted to support different layouts (multiple desktops for each single user,...)
    
  * node_wrapper.sh: Another KISS script to run node inside docker containers. Commands like
    `npm install`
@@ -16,7 +10,7 @@ Keep it simple and stupid utility scripts for different/useful/random tasks
    
  * q :
    `q <file_pattern> <text_pattern>` will grep for <text_pattern> in any file in 
-   the current directory and child ones whose file name matches <file_pattern>.  
+   the current directory and subfolder whose file name matches <file_pattern>.  
    <text_pattern> can be a regular expression. 
    Example 1: Search for any "*model*js" file (case insensitive) matching the regex
    "id.*index"
