@@ -1,0 +1,11 @@
+set number
+set ignorecase
+set encoding=utf-8
+set tabstop=4
+set expandtab
+set shiftwidth=4
+set cursorline
+colorscheme torte
+execute pathogen#infect()
+syntax on
+filetype plugin indent on
