@@ -11,6 +11,26 @@ exec &> >(tee -a "$OUTPUT") # Reditect STDOUT/STDERR to file
 exec 2>&1  
 echo "This will be logged to the file and to the screen"
 
+# Parse arguments
+#  $#  number of arguments
+while [  $#  -gt 0 ]; do
+  echo $1
+  case "$1" in
+    -l|--list)
+      echo "list arg"
+      shift 1  # ºconsume arg         ←   $# = $#-1 
+      ;;
+    -p|--port)
+      export PORT="${2}:"
+      echo "port: $PORT"
+      shift 2  #  consume arg+value   ←   $# = $#-2 
+      ;;
+    *)
+      echo "non-recognised option"
+      shift 1  #  consume arg         ←   $# = $#-1 
+  esac
+done
+
 GLOBAL_EXIT_STATUS=0
 WD=$(pwd)
 
