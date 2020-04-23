@@ -49,7 +49,6 @@ function funThrow {
 
 
 while [  $#  -gt 0 ]; do  # $#  number of arguments
-  echo $1
   case "$1" in
     -l|--list)
       echo "list arg"
