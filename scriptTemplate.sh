@@ -1,5 +1,4 @@
 #!/bin/bash
-set -e 
 
 OUTPUT="$(basename $0).log"
 exec 3>&1   # Copy current STDOUT to &3
@@ -11,9 +10,45 @@ exec &> >(tee -a "$OUTPUT") # Reditect STDOUT/STDERR to file
 exec 2>&1  
 echo "This will be logged to the file and to the screen"
 
-# Parse arguments
-#  $#  number of arguments
-while [  $#  -gt 0 ]; do
+
+GLOBAL_EXIT_STATUS=0
+WD=$(pwd)
+
+LOCK="/tmp/exampleLock"
+function funCleanUp() {
+  set +e
+  echo "Cleaning resource and exiting"
+  rm -f $LOCK  
+}
+trap funCleanUp EXIT   # <-- Clean any resource on exit
+
+if [ ! ${STOP_ON_ERR_MSG} ] ; then
+  STOP_ON_ERR_MSG=true
+fi
+ERR_MSG=""
+function funThrow {
+    if [[ $STOP_ON_ERR_MSG != false ]] ; then
+      echo "ERR_MSG DETECTED: Aborting now due to " 
+      echo -e ${ERR_MSG} 
+      if [[ $1 != "" ]]; then
+          GLOBAL_EXIT_STATUS=$1 ; 
+      elif [[ $GLOBAL_EXIT_STATUS == 0 ]]; then
+          GLOBAL_EXIT_STATUS=1 ;
+      fi
+      exit $GLOBAL_EXIT_STATUS
+    else
+      echo "ERR_MSG DETECTED: "
+      echo -e ${ERR_MSG}
+      echo "WARN: CONTINUING WITH ERR_MSGS "
+
+      GLOBAL_EXIT_STATUS=1 ;
+    fi
+    ERR_MSG=""
+}
+
+
+
+while [  $#  -gt 0 ]; do  # $#  number of arguments
   echo $1
   case "$1" in
     -l|--list)
@@ -22,57 +57,39 @@ while [  $#  -gt 0 ]; do
       ;;
     -p|--port)
       export PORT="${2}:"
-      echo "port: $PORT"
+      shift 2  #  consume arg+value   ←   $# = $#-2 
+      ;;
+    -h|--host)
+      export HOST="${2}:"
       shift 2  #  consume arg+value   ←   $# = $#-2 
       ;;
     *)
-      echo "non-recognised option"
+      echo "non-recognised option '$1'"
       shift 1  #  consume arg         ←   $# = $#-1 
   esac
 done
+set -e # exit on ERR_MSG
 
-GLOBAL_EXIT_STATUS=0
-WD=$(pwd)
-
-ERROR=""
-function funThrow {
-    if [[ $STOP_ON_ERROR != false ]] ; then
-      echo "ERROR DETECTED: Aborting now due to" 
-      echo -e ${ERROR} 
-      exit 1;
-    else
-      echo "ERROR DETECTED: "
-      echo -e ${ERROR}
-      echo "WARN: CONTINUING WITH ERRORS "
-      GLOBAL_EXIT_STATUS=1
-    fi
-    ERROR=""
-}
-
-
-function funPreChecks {
-    if [[ $1 == "A" ]] ; then
-       echo "A"
-  elif [[ $1 == "B" ]] ; then
-       echo "B"
-  else 
-    ERROR="Ussage: $0 A|B"
-    funThrow
-  fi     
+function preChecks() {
+  # Check that ENV.VARs and parsed arguments are in place
+  if [[ ! ${HOME} ]] ; then ERR_MSG="HOME ENV.VAR NOT DEFINED" ; funThrow 41 ; fi
+  if [[ ! ${PORT} ]] ; then ERR_MSG="PORT ENV.VAR NOT DEFINED" ; funThrow 42 ; fi
+  if [[ ! ${HOST} ]] ; then ERR_MSG="HOST ENV.VAR NOT DEFINED" ; funThrow 43 ; fi
+  set -u # From here on, ANY UNDEFINED VARIABLE IS CONSIDERED AN ERROR.
 }
 
 function funSTEP1 {
-  echo "STEP 1"
+  echo "STEP 1: $HOME, PORT:$PORT, HOST: $HOST"
 }
-function funSTEP2 { # throw error
-  ERROR="asdf"
-  funThrow
+function funSTEP2 { # throw ERR_MSG
+  ERR_MSG="My favourite ERROR@funSTEP2"
+  funThrow 2
 }
 
 
-cd $WD ; funPreChecks
-cd $WD ; funDeployWars
-cd $WD ; funUpdateApplication
+cd $WD ; preChecks
+cd $WD ; funSTEP1
+cd $WD ; funSTEP2
 
 echo "Exiting with status:$GLOBAL_EXIT_STATUS"
 exit $GLOBAL_EXIT_STATUS
