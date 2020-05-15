@@ -20,7 +20,7 @@ function funCleanUp() {
   echo "Cleaning resource and exiting"
   rm -f $LOCK  
 }
-trap funCleanUp EXIT   # <-- Clean any resource on exit
+trap funCleanUp EXIT   # <-- Execute funCleanUp when receiving EXIT signal
 
 if [ ! ${STOP_ON_ERR_MSG} ] ; then
   STOP_ON_ERR_MSG=true
