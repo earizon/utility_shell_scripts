@@ -20,7 +20,7 @@ function funCleanUp() {
   echo "Cleaning resource and exiting"
   rm -f $LOCK  
 }
-trap funCleanUp EXIT   # <-- Clean any resource on exit
+trap funCleanUp EXIT   # <-- Execute funCleanUp when receiving EXIT signal
 
 if [ ! ${STOP_ON_ERR_MSG} ] ; then
   STOP_ON_ERR_MSG=true
@@ -71,9 +71,9 @@ set -e # exit on ERR_MSG
 
 function preChecks() {
   # Check that ENV.VARs and parsed arguments are in place
-  if [[ ! ${HOME} ]] ; then ERR_MSG="HOME ENV.VAR NOT DEFINED" ; funThrow 41 ; fi
-  if [[ ! ${PORT} ]] ; then ERR_MSG="PORT ENV.VAR NOT DEFINED" ; funThrow 42 ; fi
-  if [[ ! ${HOST} ]] ; then ERR_MSG="HOST ENV.VAR NOT DEFINED" ; funThrow 43 ; fi
+  if [[ ! ${HOME} ]] ; then ERR_MSG="${LINENO} HOME ENV.VAR NOT DEFINED" ; funThrow 41 ; fi
+  if [[ ! ${PORT} ]] ; then ERR_MSG="${LINENO} PORT ENV.VAR NOT DEFINED" ; funThrow 42 ; fi
+  if [[ ! ${HOST} ]] ; then ERR_MSG="${LINENO} HOST ENV.VAR NOT DEFINED" ; funThrow 43 ; fi
   set -u # From here on, ANY UNDEFINED VARIABLE IS CONSIDERED AN ERROR.
 }
 
@@ -81,7 +81,7 @@ function funSTEP1 {
   echo "STEP 1: $HOME, PORT:$PORT, HOST: $HOST"
 }
 function funSTEP2 { # throw ERR_MSG
-  ERR_MSG="My favourite ERROR@funSTEP2"
+  ERR_MSG="${LINENO} My favourite ERROR@funSTEP2"
   funThrow 2
 }
 
